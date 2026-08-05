@@ -119,13 +119,6 @@ a {
   font-size: 1.5rem;
 }
 
-.logo-tagline {
-  font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--text-muted-onlight);
-}
-
 /* ---------- Header / Nav ---------- */
 
 .site-header {
@@ -302,8 +295,8 @@ a {
 .hero h1 {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: clamp(2.1rem, 5vw, 3.4rem);
-  line-height: 1.15;
+  font-size: clamp(1.7rem, 3.8vw, 2.7rem);
+  line-height: 1.2;
   color: var(--white);
 }
 
