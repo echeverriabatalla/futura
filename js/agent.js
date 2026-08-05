@@ -265,12 +265,10 @@
       /* localStorage puede no estar disponible (ej. modo privado); no es crítico */
     }
     inputArea.innerHTML = "";
-    addBubble(
-      "¡Gracias! Muy pronto vas a poder ver los proyectos que elegimos para vos en esta misma experiencia.",
-      "bot",
-      true
-    );
-    setTimeout(closeModal, 1800);
+    addBubble("¡Listo! Preparando tu mapa de proyectos...", "bot", true);
+    setTimeout(() => {
+      window.location.href = "resultados.html";
+    }, 700);
   }
 
   function resetChat() {
