@@ -22,9 +22,12 @@
       <a href="#" class="dev-logo" id="dev-logo-link" aria-label="Ver perfil de la desarrolladora">
         <span id="dev-logo-text">Desarrolladora</span>
       </a>
-      <a href="resultados.html" class="futura-badge">
-        <span class="logo logo--footer logo--onDark" style="font-size:0.95rem;">FUTURA</span>
-      </a>
+      <div class="dev-header-actions">
+        <a href="mi-cuenta/comparar.html" class="account-link">Mis tipologías</a>
+        <a href="resultados.html" class="futura-badge">
+          <span class="logo logo--footer logo--onDark" style="font-size:0.95rem;">FUTURA</span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -95,25 +98,6 @@
     </div>
   </section>
 
-  <!-- ===================== COMPARAR TIPOLOGÍAS ===================== -->
-  <div class="compare-tray" id="compare-tray" hidden>
-    <span id="compare-count">0 tipologías seleccionadas</span>
-    <div class="compare-tray-actions">
-      <button type="button" id="compare-clear" class="compare-tray-clear">Vaciar</button>
-      <button type="button" id="compare-open" class="btn btn-primary btn-sm">Comparar</button>
-    </div>
-  </div>
-
-  <div class="compare-overlay" id="compare-overlay" hidden>
-    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="compare-title">
-      <header class="compare-modal-header">
-        <h3 id="compare-title">Comparar tipologías</h3>
-        <button type="button" class="agent-close" id="compare-close" aria-label="Cerrar">&times;</button>
-      </header>
-      <div class="compare-modal-body" id="compare-body"></div>
-    </div>
-  </div>
-
   <!-- ===================== FOOTER ===================== -->
   <footer class="site-footer" id="contacto">
     <div class="wrap">
@@ -146,6 +130,9 @@
 
   <script src="js/projects-data.js"></script>
   <script src="js/maps-utils.js"></script>
+  <script src="js/typology-visuals.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth-modal.js"></script>
   <script src="js/proyecto.js"></script>
 </body>
 </html>

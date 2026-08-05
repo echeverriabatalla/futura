@@ -897,6 +897,12 @@ section {
   padding: 150px 0 60px;
 }
 
+/* Cuando el hero sigue a un header estático (no fijo) como .dev-header,
+   no necesita el padding-top pensado para compensar un header flotante. */
+.dev-header + .results-hero {
+  padding-top: 60px;
+}
+
 .results-hero h1 {
   font-family: var(--font-serif);
   font-weight: 700;
@@ -1168,6 +1174,23 @@ section {
   color: var(--gold-400);
 }
 
+.dev-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.account-link {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted-ondark);
+  transition: color 0.2s ease;
+}
+
+.account-link:hover {
+  color: var(--white);
+}
+
 .futura-badge {
   opacity: 0.7;
   transition: opacity 0.2s ease;
@@ -1414,48 +1437,6 @@ section {
   color: var(--white);
 }
 
-.compare-tray {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%);
-  z-index: 900;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: var(--navy-950);
-  color: var(--white);
-  padding: 14px 16px 14px 22px;
-  border-radius: 999px;
-  box-shadow: 0 20px 44px -14px rgba(4, 8, 20, 0.55);
-}
-
-.compare-tray span {
-  font-size: 0.88rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.compare-tray-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.compare-tray-clear {
-  background: none;
-  border: none;
-  color: var(--text-muted-ondark);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 6px;
-}
-
-.compare-tray-clear:hover {
-  color: var(--white);
-}
-
 .compare-overlay {
   position: fixed;
   inset: 0;
@@ -1568,12 +1549,206 @@ section {
     padding: 0 0 18px;
     margin-bottom: 18px;
   }
+}
 
-  .compare-tray {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    transform: none;
-    justify-content: space-between;
-  }
+/* ---------- Modal de login / crear cuenta ---------- */
+
+.auth-modal {
+  max-width: 380px;
+}
+
+.auth-modal-body {
+  padding: 24px 26px 28px;
+}
+
+.auth-modal-lead {
+  font-size: 0.9rem;
+  color: var(--text-muted-onlight);
+  margin-bottom: 18px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted-onlight);
+  margin-bottom: 14px;
+}
+
+.auth-field input {
+  border: 1px solid var(--bg-light-alt);
+  background: var(--bg-light);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  color: var(--text-dark);
+  font-weight: 400;
+}
+
+.auth-field input:focus {
+  outline: 2px solid var(--blue-500);
+  outline-offset: 1px;
+}
+
+.auth-modal-body .btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.auth-error {
+  color: #c0392b;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.auth-info {
+  color: #1f8a5f;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.auth-switch {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.84rem;
+  color: var(--text-muted-onlight);
+}
+
+.auth-switch button {
+  background: none;
+  border: none;
+  color: var(--blue-600);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-switch button:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Área de usuario: tipologías guardadas ---------- */
+
+.account-email {
+  font-size: 0.84rem;
+  color: var(--text-muted-ondark);
+  font-weight: 600;
+}
+
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.saved-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 14px 34px -22px rgba(11, 18, 32, 0.35);
+}
+
+.saved-card-image {
+  aspect-ratio: 320 / 210;
+  background: var(--bg-light-alt);
+}
+
+.saved-card-image svg {
+  width: 100%;
+  height: 100%;
+}
+
+.saved-card-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.saved-card-project {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--blue-600);
+  text-transform: uppercase;
+}
+
+.saved-card-body h3 {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  color: var(--text-dark);
+}
+
+.saved-card-price {
+  font-weight: 700;
+  color: var(--navy-900);
+  font-size: 0.94rem;
+  margin-top: 2px;
+}
+
+.saved-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--bg-light-alt);
+}
+
+.saved-card-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted-onlight);
+  cursor: pointer;
+}
+
+.saved-card-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue-600);
+}
+
+.saved-card-remove {
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.saved-card-remove:hover {
+  text-decoration: underline;
+}
+
+.compare-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.compare-inline .compare-col {
+  flex: 1;
+  min-width: 220px;
+  max-width: 280px;
+  border-right: none;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 0 14px 34px -22px rgba(11, 18, 32, 0.35);
+}
+
+.compare-col-project {
+  font-size: 0.82rem;
+  color: var(--text-muted-onlight);
+  margin-top: 2px;
 }
