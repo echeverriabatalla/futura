@@ -19,10 +19,10 @@
       placeholder: "Ej: 38, 36, 9 y 6 años",
     },
     {
-      key: "occupations",
-      text: "¿A qué se dedica cada miembro adulto de la familia?",
+      key: "workLocations",
+      text: "¿Dónde trabajan las personas que viven en tu hogar?",
       type: "textarea",
-      placeholder: "Ej: Ella es arquitecta, él trabaja en ventas remoto",
+      placeholder: "Ej: Ella en Escazú, él trabaja remoto desde la casa",
     },
     {
       key: "schools",
