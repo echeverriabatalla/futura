@@ -84,7 +84,9 @@
         '<span>' + t.sqm + " m²</span>" +
         '<span>' + t.bedrooms + " hab.</span>" +
         '<span>' + t.bathrooms + " baños</span>" +
-        "</div></div>";
+        "</div>" +
+        '<button type="button" class="compare-btn" data-id="' + t.id + '">+ Comparar</button>' +
+        "</div>";
 
       const toggleBtns = card.querySelectorAll(".typology-toggle-btn");
       const views = card.querySelectorAll(".typology-image");
@@ -96,9 +98,78 @@
         });
       });
 
+      card.querySelector(".compare-btn").addEventListener("click", (e) => {
+        toggleCompare(t, e.currentTarget);
+      });
+
       grid.appendChild(card);
     });
   }
+
+  // ---------- Comparar tipologías ----------
+  const compareSelection = new Map();
+  const compareTray = document.getElementById("compare-tray");
+  const compareCount = document.getElementById("compare-count");
+  const compareOverlay = document.getElementById("compare-overlay");
+  const compareBody = document.getElementById("compare-body");
+
+  function toggleCompare(typology, btn) {
+    if (compareSelection.has(typology.id)) {
+      compareSelection.delete(typology.id);
+      btn.classList.remove("is-active");
+      btn.textContent = "+ Comparar";
+    } else {
+      compareSelection.set(typology.id, typology);
+      btn.classList.add("is-active");
+      btn.textContent = "✓ En comparación";
+    }
+    updateCompareTray();
+  }
+
+  function updateCompareTray() {
+    const n = compareSelection.size;
+    compareTray.hidden = n === 0;
+    compareCount.textContent = n + (n === 1 ? " tipología seleccionada" : " tipologías seleccionadas");
+  }
+
+  function renderCompareModal() {
+    compareBody.innerHTML = "";
+    compareSelection.forEach((t) => {
+      const col = document.createElement("div");
+      col.className = "compare-col";
+      col.innerHTML =
+        '<div class="compare-col-image">' + floorPlanSVG(t) + "</div>" +
+        "<h4>" + t.name + "</h4>" +
+        '<dl class="compare-specs">' +
+        "<dt>Área</dt><dd>" + t.sqm + " m²</dd>" +
+        "<dt>Habitaciones</dt><dd>" + t.bedrooms + "</dd>" +
+        "<dt>Baños</dt><dd>" + t.bathrooms + "</dd>" +
+        "</dl>";
+      compareBody.appendChild(col);
+    });
+  }
+
+  document.getElementById("compare-open").addEventListener("click", () => {
+    renderCompareModal();
+    compareOverlay.hidden = false;
+  });
+  document.getElementById("compare-clear").addEventListener("click", () => {
+    compareSelection.clear();
+    document.querySelectorAll(".compare-btn.is-active").forEach((btn) => {
+      btn.classList.remove("is-active");
+      btn.textContent = "+ Comparar";
+    });
+    updateCompareTray();
+  });
+  document.getElementById("compare-close").addEventListener("click", () => {
+    compareOverlay.hidden = true;
+  });
+  compareOverlay.addEventListener("click", (e) => {
+    if (e.target === compareOverlay) compareOverlay.hidden = true;
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !compareOverlay.hidden) compareOverlay.hidden = true;
+  });
 
   function floorPlanSVG(t) {
     const w = 320,
