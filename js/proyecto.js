@@ -43,7 +43,21 @@
     devText.textContent = p.developer.name;
     // La página propia de cada desarrolladora (listado de proyectos y
     // trayectoria) es una funcionalidad futura; el link ya queda listo.
-    devLink.href = "desarrolladora.html?dev=" + p.developer.slug;
+    devLink.href = window.FuturaBreadcrumb.withOrigin("desarrolladora.html?dev=" + p.developer.slug, "proyecto", {
+      pid: p.id,
+      fromLabel: p.name,
+    });
+
+    document.getElementById("account-link").href = window.FuturaBreadcrumb.withOrigin("mi-cuenta/comparar.html", "proyecto", {
+      pid: p.id,
+      fromLabel: p.name,
+    });
+
+    window.FuturaBreadcrumb.render({
+      container: document.getElementById("breadcrumb-slot"),
+      currentLabel: p.name,
+      fallback: { href: "resultados.html", label: "Resultados" },
+    });
   }
 
   function renderTitleBar(p) {

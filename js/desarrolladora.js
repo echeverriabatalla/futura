@@ -36,13 +36,23 @@
     document.getElementById("dev-stat-projects").textContent = dev.projectsCompleted + "+";
     document.getElementById("dev-stat-years").textContent = new Date().getFullYear() - dev.foundedYear;
     document.getElementById("dev-stat-active").textContent = projects.length;
+
+    window.FuturaBreadcrumb.render({
+      container: document.getElementById("breadcrumb-slot"),
+      currentLabel: dev.name,
+      fallback: { href: "resultados.html", label: "Resultados" },
+    });
   }
 
   function renderProjectList(projects) {
     const grid = document.getElementById("dev-project-list");
     grid.innerHTML = "";
     projects.forEach((project) => {
-      grid.appendChild(window.FuturaProjectCard.render(project));
+      grid.appendChild(
+        window.FuturaProjectCard.render(project, {
+          from: { from: "desarrolladora", extra: { dev: developer.slug, fromLabel: developer.name } },
+        })
+      );
     });
   }
 
@@ -85,7 +95,12 @@
               '<div style="font-family: Inter, sans-serif; max-width:200px;">' +
                 '<strong style="color:#0b1220;">' + project.name + "</strong><br/>" +
                 '<span style="color:#5b6b8c; font-size:12.5px;">' + project.zone + "</span><br/>" +
-                '<a href="proyecto.html?id=' + project.id + '" style="color:#3b66d6; font-size:12px;">Ver proyecto →</a></div>'
+                '<a href="' +
+                window.FuturaBreadcrumb.withOrigin("proyecto.html?id=" + project.id, "desarrolladora", {
+                  dev: developer.slug,
+                  fromLabel: developer.name,
+                }) +
+                '" style="color:#3b66d6; font-size:12px;">Ver proyecto →</a></div>'
             );
             infoWindow.open(map, marker);
           });

@@ -16,6 +16,11 @@ window.FuturaProjectCard = (() => {
         "</div>";
     }
 
+    let link = "proyecto.html?id=" + project.id;
+    if (opts.from && window.FuturaBreadcrumb) {
+      link = window.FuturaBreadcrumb.withOrigin(link, opts.from.from, opts.from.extra);
+    }
+
     card.innerHTML =
       topBar +
       "<h3>" + project.name + "</h3>" +
@@ -27,7 +32,7 @@ window.FuturaProjectCard = (() => {
       '<div class="project-amenities">' +
       project.amenities.map((a) => '<span class="project-amenity">' + a + "</span>").join("") +
       "</div>" +
-      '<a class="project-card-link" href="proyecto.html?id=' + project.id + '">Ver proyecto →</a>';
+      '<a class="project-card-link" href="' + link + '">Ver proyecto →</a>';
 
     return card;
   }

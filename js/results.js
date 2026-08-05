@@ -172,8 +172,8 @@
           '<span style="color:#5b6b8c; font-size:12.5px;">' + project.zone + "</span><br/>" +
           '<span style="color:#3b66d6; font-weight:700; font-size:13px;">Desde $' +
           project.priceFrom.toLocaleString("en-US") +
-          '</span><br/><a href="proyecto.html?id=' +
-          project.id +
+          '</span><br/><a href="' +
+          window.FuturaBreadcrumb.withOrigin("proyecto.html?id=" + project.id, "resultados") +
           '" style="color:#3b66d6; font-size:12px;">Ver proyecto →</a></div>'
       );
       iw.open(map, marker);
@@ -194,6 +194,7 @@
       const card = window.FuturaProjectCard.render(project, {
         matchScore: project.matchScore,
         badge: index === 0 ? "Mejor match" : null,
+        from: { from: "resultados" },
       });
 
       card.addEventListener("click", (e) => {

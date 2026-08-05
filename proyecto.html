@@ -23,12 +23,13 @@
         <span id="dev-logo-text">Desarrolladora</span>
       </a>
       <div class="dev-header-actions">
-        <a href="mi-cuenta/comparar.html" class="account-link">Mis tipologías</a>
+        <a href="mi-cuenta/comparar.html" class="account-link" id="account-link">Mis tipologías</a>
         <a href="resultados.html" class="futura-badge">
           <span class="logo logo--footer logo--onDark" style="font-size:0.95rem;">FUTURA</span>
         </a>
       </div>
     </div>
+    <div class="wrap breadcrumb-bar" id="breadcrumb-slot"></div>
   </header>
 
   <main id="project-main" hidden>
@@ -131,6 +132,7 @@
   <script src="js/projects-data.js"></script>
   <script src="js/maps-utils.js"></script>
   <script src="js/typology-visuals.js"></script>
+  <script src="js/breadcrumb-nav.js"></script>
   <!-- Mockup temporal de auth (localStorage). Para pasar a Supabase real,
        cambiar por: <script src="js/supabase-client.js"></script> -->
   <script src="js/mock-auth.js"></script>

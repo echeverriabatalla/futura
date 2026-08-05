@@ -18,6 +18,13 @@
 
   const selected = new Map();
 
+  window.FuturaBreadcrumb.render({
+    container: document.getElementById("breadcrumb-slot"),
+    basePrefix: "../",
+    currentLabel: "Mis tipologías",
+    fallback: { href: "../resultados.html", label: "Resultados" },
+  });
+
   signinBtn.addEventListener("click", () => window.FuturaAuthModal.open(loadPage));
   signedOutBtn.addEventListener("click", () => window.FuturaAuthModal.open(loadPage));
   signoutBtn.addEventListener("click", () => {
@@ -97,6 +104,9 @@
         "<span>" + item.typology.bathrooms + " baños</span>" +
         "</div>" +
         '<span class="saved-card-price">Desde $' + item.project.priceFrom.toLocaleString("en-US") + "</span>" +
+        '<a class="project-card-link" href="' +
+        window.FuturaBreadcrumb.withOrigin("../proyecto.html?id=" + item.project.id, "cuenta") +
+        '">Ver proyecto →</a>' +
         '<div class="saved-card-actions">' +
         '<label class="saved-card-check"><input type="checkbox" /> Comparar</label>' +
         '<button type="button" class="saved-card-remove">Eliminar</button>' +
