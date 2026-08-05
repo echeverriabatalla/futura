@@ -136,10 +136,12 @@
         }
       })
       .catch(() => {
-        btn.textContent = "No se pudo conectar";
-        setTimeout(() => {
-          btn.textContent = "+ Comparar";
-        }, 2500);
+        // No se pudo confirmar la sesión (red caída, SDK bloqueado, etc.):
+        // se asume que hace falta iniciar sesión. El modal va a mostrar el
+        // error real si el intento de login también falla, dándole al
+        // usuario un formulario donde reintentar en vez de un callejón
+        // sin salida.
+        window.FuturaAuthModal.open(() => saveAndMark(project, typology, btn));
       });
   }
 
