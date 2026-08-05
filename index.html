@@ -56,7 +56,7 @@
         </p>
 
         <div class="hero-actions">
-          <a href="mailto:hola@futura.cr?subject=Quiero%20unirme%20a%20FUTURA" class="btn btn-primary">Quiero encontrar mi hogar</a>
+          <button type="button" class="btn btn-primary" id="open-agent-btn">Quiero encontrar mi hogar</button>
           <a href="#como-funciona" class="btn btn-ghost">Ver todos los proyectos</a>
         </div>
       </div>
@@ -163,6 +163,33 @@
     </div>
   </footer>
 
+  <!-- ===================== AGENTE FUTURA (POPUP) ===================== -->
+  <div class="agent-overlay" id="agent-overlay" hidden>
+    <div class="agent-modal" role="dialog" aria-modal="true" aria-labelledby="agent-title">
+      <header class="agent-header">
+        <div class="agent-header-id">
+          <span class="agent-avatar" aria-hidden="true">F</span>
+          <div>
+            <p class="agent-title" id="agent-title">Asistente FUTURA</p>
+            <p class="agent-subtitle" id="agent-progress-label">Pregunta 1 de 9</p>
+          </div>
+        </div>
+        <button type="button" class="agent-close" id="agent-close" aria-label="Cerrar">&times;</button>
+      </header>
+
+      <div class="agent-progress">
+        <div class="agent-progress-bar" id="agent-progress-bar"></div>
+      </div>
+
+      <div class="agent-chat" id="agent-chat"></div>
+
+      <form class="agent-composer" id="agent-composer">
+        <div class="agent-input-area" id="agent-input-area"></div>
+      </form>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
+  <script src="js/agent.js"></script>
 </body>
 </html>
