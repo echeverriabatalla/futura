@@ -191,38 +191,10 @@
   function renderProjectList(scored) {
     listEl.innerHTML = "";
     scored.forEach((project, index) => {
-      const card = document.createElement("article");
-      card.className = "project-card";
-
-      const badge = index === 0 ? '<span class="project-badge">Mejor match</span>' : "";
-
-      card.innerHTML =
-        '<div class="project-card-top">' +
-        badge +
-        '<span class="project-match">' +
-        project.matchScore +
-        "% match</span>" +
-        "</div>" +
-        "<h3>" +
-        project.name +
-        "</h3>" +
-        '<p class="project-zone">' +
-        project.zone +
-        "</p>" +
-        '<p class="project-price">Desde $' +
-        project.priceFrom.toLocaleString("en-US") +
-        "</p>" +
-        '<div class="project-meta">' +
-        "<span>" +
-        project.bedrooms +
-        "</span><span>Entrega " +
-        project.delivery +
-        "</span>" +
-        "</div>" +
-        '<div class="project-amenities">' +
-        project.amenities.map((a) => '<span class="project-amenity">' + a + "</span>").join("") +
-        "</div>" +
-        '<a class="project-card-link" href="proyecto.html?id=' + project.id + '">Ver proyecto →</a>';
+      const card = window.FuturaProjectCard.render(project, {
+        matchScore: project.matchScore,
+        badge: index === 0 ? "Mejor match" : null,
+      });
 
       card.addEventListener("click", (e) => {
         if (e.target.closest(".project-card-link")) return;
