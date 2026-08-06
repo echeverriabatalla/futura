@@ -1,6 +1,6 @@
 (() => {
   const { loadGoogleMaps, MAP_STYLE, computeIsochrone } = window.FuturaMapsUtils;
-  const { floorPlanSVG, isoSVG } = window.FuturaTypologyVisuals;
+  const { floorPlanSVG, isoSVG, specList } = window.FuturaTypologyVisuals;
   const PROJECTS = window.FUTURA_PROJECTS;
 
   const POI_CATEGORIES = [
@@ -96,9 +96,7 @@
         '<div class="typology-info">' +
         "<h3>" + t.name + "</h3>" +
         '<div class="typology-specs">' +
-        '<span>' + t.sqm + " m²</span>" +
-        '<span>' + t.bedrooms + " hab.</span>" +
-        '<span>' + t.bathrooms + " baños</span>" +
+        specList(t).map((s) => "<span>" + s + "</span>").join("") +
         "</div>" +
         '<button type="button" class="compare-btn" data-id="' + t.id + '">+ Comparar</button>' +
         "</div>";

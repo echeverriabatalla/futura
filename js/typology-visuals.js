@@ -2,7 +2,23 @@
 // en SVG a partir de sus specs. Compartido entre proyecto.html y
 // mi-cuenta/comparar.html — todavía no hay renders/planos reales.
 window.FuturaTypologyVisuals = (() => {
+  // Los lotes (propertyType "lote") no tienen habitaciones ni baños — se
+  // reconocen por eso en vez de por un campo aparte.
+  function isLot(t) {
+    return !t.bedrooms && !t.bathrooms;
+  }
+
+  // Specs a mostrar como pills junto a cada tipología. Un solo lugar para
+  // esta lista evita repetir el caso especial de lote en cada página que
+  // muestra tipologías (proyecto, guardadas, etc.).
+  function specList(t) {
+    if (isLot(t)) return [t.sqm + " m²", "Lote de terreno"];
+    return [t.sqm + " m²", t.bedrooms + " hab.", t.bathrooms + " baños"];
+  }
+
   function floorPlanSVG(t) {
+    if (isLot(t)) return lotPlanSVG(t);
+
     const w = 320,
       h = 210;
     const livingH = 82;
@@ -41,7 +57,22 @@ window.FuturaTypologyVisuals = (() => {
     );
   }
 
+  function lotPlanSVG(t) {
+    return (
+      '<svg viewBox="0 0 320 210" role="img" aria-label="Lote referencial">' +
+      '<rect x="0" y="0" width="320" height="210" fill="#ffffff"/>' +
+      '<rect x="24" y="24" width="272" height="162" fill="#eef1f8" stroke="#0b1220" stroke-width="2" stroke-dasharray="7 5"/>' +
+      '<circle cx="24" cy="24" r="4.5" fill="#c9a15a"/><circle cx="296" cy="24" r="4.5" fill="#c9a15a"/>' +
+      '<circle cx="24" cy="186" r="4.5" fill="#c9a15a"/><circle cx="296" cy="186" r="4.5" fill="#c9a15a"/>' +
+      '<text x="160" y="100" text-anchor="middle" font-size="14" fill="#0b1220" font-weight="700" font-family="Inter, sans-serif">Lote de terreno</text>' +
+      '<text x="160" y="122" text-anchor="middle" font-size="12" fill="#5b6b8c" font-family="Inter, sans-serif">' + t.sqm + " m²</text>" +
+      "</svg>"
+    );
+  }
+
   function isoSVG(t) {
+    if (isLot(t)) return lotIsoSVG(t);
+
     const height = 40 + Math.min(60, t.sqm / 4);
     const topY = 90 - height;
     return (
@@ -60,5 +91,15 @@ window.FuturaTypologyVisuals = (() => {
     );
   }
 
-  return { floorPlanSVG, isoSVG };
+  function lotIsoSVG(t) {
+    return (
+      '<svg viewBox="0 0 320 210" role="img" aria-label="Vista isométrica de lote referencial">' +
+      '<polygon points="160,40 270,102 160,164 50,102" fill="#d8e0f2" stroke="#0b1220" stroke-width="2"/>' +
+      '<polygon points="160,40 270,102 160,164 50,102" fill="none" stroke="#c9a15a" stroke-width="2" stroke-dasharray="6 5"/>' +
+      '<text x="160" y="107" text-anchor="middle" font-size="13" fill="#0b1220" font-weight="700" font-family="Inter, sans-serif">' + t.sqm + " m²</text>" +
+      "</svg>"
+    );
+  }
+
+  return { floorPlanSVG, isoSVG, specList, isLot };
 })();

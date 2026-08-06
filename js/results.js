@@ -11,10 +11,19 @@
     { value: "4", label: "4+ habitaciones" },
   ];
 
-  // Mismas etiquetas que usa el asistente en la pregunta de presupuesto,
-  // así el valor que contesta ahí cae exacto en una de estas opciones.
+  const PROPERTY_TYPE_OPTIONS = [
+    { value: "", label: "Cualquier tipo" },
+    { value: "apartamento", label: "Apartamento" },
+    { value: "casa", label: "Casa" },
+    { value: "lote", label: "Lote" },
+  ];
+
+  const PRICE_MAX = 500000;
+
+  // Mismas etiquetas que usa el asistente en la pregunta de presupuesto:
+  // ya no alimentan un <select>, solo sirven para convertir la respuesta
+  // del asistente en un techo de precio para el slider.
   const PRICE_BRACKETS = [
-    { value: "", label: "Cualquier presupuesto" },
     { value: "Menos de $150,000", label: "Menos de $150,000", max: 150000 },
     { value: "$150,000 – $250,000", label: "$150,000 – $250,000", min: 150000, max: 250000 },
     { value: "$250,000 – $400,000", label: "$250,000 – $400,000", min: 250000, max: 400000 },
@@ -29,13 +38,17 @@
   const noMatchesEl = document.getElementById("no-matches-state");
   const filtersNoteEl = document.getElementById("filters-note");
   const zoneSelect = document.getElementById("filter-zone");
+  const typeSelect = document.getElementById("filter-type");
   const bedroomsSelect = document.getElementById("filter-bedrooms");
-  const priceSelect = document.getElementById("filter-price");
+  const priceMinInput = document.getElementById("filter-price-min");
+  const priceMaxInput = document.getElementById("filter-price-max");
+  const priceDisplayEl = document.getElementById("price-range-display");
+  const priceFillEl = document.getElementById("price-range-fill");
 
   const zoneOptions = Array.from(new Set(PROJECTS.map((p) => p.zone)));
 
   const profile = loadProfile();
-  const filters = { zone: "", bedrooms: "0", price: "" };
+  const filters = { zone: "", bedrooms: "0", propertyType: "", priceMin: 0, priceMax: PRICE_MAX };
   let seededFromProfile = false;
 
   renderPageCopy(profile);
@@ -111,9 +124,15 @@
       }
     }
 
-    if (p.budget && PRICE_BRACKETS.some((b) => b.value === p.budget)) {
-      filters.price = p.budget;
-      seededFromProfile = true;
+    if (p.budget) {
+      const bracket = PRICE_BRACKETS.find((b) => b.value === p.budget);
+      // Solo se prellena el techo: el presupuesto que contestó en el
+      // asistente es lo más que quiere gastar, no un mínimo — un proyecto
+      // más barato que su rango sigue siendo una opción válida.
+      if (bracket && bracket.max != null) {
+        filters.priceMax = clamp(bracket.max, 0, PRICE_MAX);
+        seededFromProfile = true;
+      }
     }
 
     if (p.familySize) {
@@ -142,22 +161,48 @@
     return options.find((z) => normalize(z).includes(nz)) || "";
   }
 
+  function clamp(v, lo, hi) {
+    return Math.max(lo, Math.min(hi, v));
+  }
+
+  function formatPrice(v) {
+    return "$" + v.toLocaleString("en-US");
+  }
+
+  function updatePriceUI() {
+    priceMinInput.value = filters.priceMin;
+    priceMaxInput.value = filters.priceMax;
+    const minPct = (filters.priceMin / PRICE_MAX) * 100;
+    const maxPct = (filters.priceMax / PRICE_MAX) * 100;
+    priceFillEl.style.left = minPct + "%";
+    priceFillEl.style.right = 100 - maxPct + "%";
+    const maxLabel = filters.priceMax >= PRICE_MAX ? "$500,000+" : formatPrice(filters.priceMax);
+    priceDisplayEl.textContent = formatPrice(filters.priceMin) + " – " + maxLabel;
+  }
+
   function renderFilterControls() {
     zoneSelect.innerHTML =
       '<option value="">Cualquier zona</option>' +
       zoneOptions.map((z) => '<option value="' + z + '">' + z + "</option>").join("");
     zoneSelect.value = filters.zone;
 
+    typeSelect.innerHTML = PROPERTY_TYPE_OPTIONS.map((o) => '<option value="' + o.value + '">' + o.label + "</option>").join("");
+    typeSelect.value = filters.propertyType;
+
     bedroomsSelect.innerHTML = BEDROOM_OPTIONS.map((o) => '<option value="' + o.value + '">' + o.label + "</option>").join("");
     bedroomsSelect.value = filters.bedrooms;
 
-    priceSelect.innerHTML = PRICE_BRACKETS.map((o) => '<option value="' + o.value + '">' + o.label + "</option>").join("");
-    priceSelect.value = filters.price;
-
+    updatePriceUI();
     updateFiltersNote();
 
     zoneSelect.addEventListener("change", () => {
       filters.zone = zoneSelect.value;
+      seededFromProfile = false;
+      updateFiltersNote();
+      applyFilters();
+    });
+    typeSelect.addEventListener("change", () => {
+      filters.propertyType = typeSelect.value;
       seededFromProfile = false;
       updateFiltersNote();
       applyFilters();
@@ -168,9 +213,22 @@
       updateFiltersNote();
       applyFilters();
     });
-    priceSelect.addEventListener("change", () => {
-      filters.price = priceSelect.value;
+
+    priceMinInput.addEventListener("input", () => {
+      filters.priceMin = clamp(Number(priceMinInput.value), 0, filters.priceMax);
       seededFromProfile = false;
+      updatePriceUI();
+    });
+    priceMinInput.addEventListener("change", () => {
+      updateFiltersNote();
+      applyFilters();
+    });
+    priceMaxInput.addEventListener("input", () => {
+      filters.priceMax = clamp(Number(priceMaxInput.value), filters.priceMin, PRICE_MAX);
+      seededFromProfile = false;
+      updatePriceUI();
+    });
+    priceMaxInput.addEventListener("change", () => {
       updateFiltersNote();
       applyFilters();
     });
@@ -186,12 +244,15 @@
 
   function resetFilters() {
     filters.zone = "";
+    filters.propertyType = "";
     filters.bedrooms = "0";
-    filters.price = "";
+    filters.priceMin = 0;
+    filters.priceMax = PRICE_MAX;
     seededFromProfile = false;
     zoneSelect.value = "";
+    typeSelect.value = "";
     bedroomsSelect.value = "0";
-    priceSelect.value = "";
+    updatePriceUI();
     updateFiltersNote();
     applyFilters();
   }
@@ -205,15 +266,16 @@
 
   function getFilteredProjects() {
     const minBedrooms = parseInt(filters.bedrooms, 10) || 0;
-    const bracket = PRICE_BRACKETS.find((b) => b.value === filters.price);
+    // El extremo derecho del slider en su tope ($500,000+) significa "sin
+    // techo", ya que puede haber proyectos más caros que el rango del slider.
+    const priceCeiling = filters.priceMax >= PRICE_MAX ? Infinity : filters.priceMax;
 
     return PROJECTS.filter((project) => {
       if (filters.zone && project.zone !== filters.zone) return false;
+      if (filters.propertyType && project.propertyType !== filters.propertyType) return false;
       if (minBedrooms && maxBedrooms(project) < minBedrooms) return false;
-      // El precio es un techo, no un rango exacto: un proyecto más barato
-      // que el presupuesto elegido sigue siendo una opción válida, así que
-      // solo se descarta lo que se pasa del máximo del tramo.
-      if (bracket && bracket.max != null && project.priceFrom > bracket.max) return false;
+      if (project.priceFrom < filters.priceMin) return false;
+      if (project.priceFrom > priceCeiling) return false;
       return true;
     });
   }

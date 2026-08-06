@@ -42,4 +42,20 @@ window.FUTURA_DEVELOPERS = [
     description:
       "Altura Desarrollos crea proyectos residenciales de lujo en las zonas más exclusivas del Gran Área Metropolitana, con foco en acabados premium, vistas y amenidades de primer nivel.",
   },
+  {
+    slug: "roble-real-homes",
+    name: "Roble Real Homes",
+    foundedYear: 2014,
+    projectsCompleted: 8,
+    description:
+      "Roble Real Homes construye comunidades de casas unifamiliares en Heredia y sus alrededores, pensadas para familias que buscan jardín propio y espacio sin salir del GAM.",
+  },
+  {
+    slug: "desarrollos-vista-verde",
+    name: "Desarrollos Vista Verde",
+    foundedYear: 2018,
+    projectsCompleted: 5,
+    description:
+      "Desarrollos Vista Verde urbaniza terrenos listos para construir en zonas de crecimiento del GAM, con servicios básicos ya instalados para que cada familia diseñe su propia casa.",
+  },
 ];

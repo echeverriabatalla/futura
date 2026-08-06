@@ -1,6 +1,6 @@
 (() => {
   const PROJECTS = window.FUTURA_PROJECTS;
-  const { floorPlanSVG } = window.FuturaTypologyVisuals;
+  const { floorPlanSVG, specList } = window.FuturaTypologyVisuals;
   const MAX_COMPARE = 4;
   const DEFAULT_HINT = "Marcá hasta " + MAX_COMPARE + " tipologías para incluirlas en tu solicitud.";
 
@@ -101,9 +101,7 @@
         '<span class="saved-card-project">' + item.project.name + " · " + item.project.developer.name + "</span>" +
         "<h3>" + item.typology.name + "</h3>" +
         '<div class="typology-specs">' +
-        "<span>" + item.typology.sqm + " m²</span>" +
-        "<span>" + item.typology.bedrooms + " hab.</span>" +
-        "<span>" + item.typology.bathrooms + " baños</span>" +
+        specList(item.typology).map((s) => "<span>" + s + "</span>").join("") +
         "</div>" +
         '<span class="saved-card-price">Desde $' + item.project.priceFrom.toLocaleString("en-US") + "</span>" +
         '<a class="project-card-link" href="' +

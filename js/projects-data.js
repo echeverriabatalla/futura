@@ -9,6 +9,7 @@ window.FUTURA_PROJECTS = [
     priceFrom: 185000,
     bedrooms: "2–3 hab.",
     delivery: "2027",
+    propertyType: "apartamento",
     amenities: ["Piscina", "Gimnasio", "Coworking", "Seguridad 24/7"],
     developer: { name: "Grupo Terra Nova", slug: "grupo-terra-nova" },
     typologies: [
@@ -24,6 +25,7 @@ window.FUTURA_PROJECTS = [
     priceFrom: 265000,
     bedrooms: "3–4 hab.",
     delivery: "2026",
+    propertyType: "apartamento",
     amenities: ["Áreas verdes", "Piscina", "Salón de eventos", "Cancha multiuso"],
     developer: { name: "Inversiones Cerro Alto", slug: "inversiones-cerro-alto" },
     typologies: [
@@ -39,6 +41,7 @@ window.FUTURA_PROJECTS = [
     priceFrom: 210000,
     bedrooms: "2 hab.",
     delivery: "2027",
+    propertyType: "apartamento",
     amenities: ["Rooftop", "Gimnasio", "Pet-friendly", "Coworking"],
     developer: { name: "Constructora Volcán", slug: "constructora-volcan" },
     typologies: [
@@ -54,6 +57,7 @@ window.FUTURA_PROJECTS = [
     priceFrom: 195000,
     bedrooms: "3 hab.",
     delivery: "2026",
+    propertyType: "apartamento",
     amenities: ["Piscina", "Parque infantil", "Seguridad 24/7"],
     developer: { name: "Desarrollos Montebello", slug: "desarrollos-montebello" },
     typologies: [
@@ -69,11 +73,44 @@ window.FUTURA_PROJECTS = [
     priceFrom: 340000,
     bedrooms: "4 hab.",
     delivery: "2028",
+    propertyType: "apartamento",
     amenities: ["Club house", "Piscina infinita", "Gimnasio", "Senderos naturales"],
     developer: { name: "Altura Desarrollos", slug: "altura-desarrollos" },
     typologies: [
       { id: "a", name: "Tipo A", sqm: 165, bedrooms: 4, bathrooms: 3.5 },
       { id: "b", name: "Penthouse", sqm: 210, bedrooms: 4, bathrooms: 4.5 },
+    ],
+  },
+  {
+    id: "villas-del-roble",
+    name: "Villas del Roble",
+    zone: "Belén, Heredia",
+    location: { lat: 10.0075, lng: -84.1963 },
+    priceFrom: 285000,
+    bedrooms: "3–4 hab.",
+    delivery: "2027",
+    propertyType: "casa",
+    amenities: ["Jardín privado", "Parqueo techado", "Seguridad 24/7", "Zona de juegos"],
+    developer: { name: "Roble Real Homes", slug: "roble-real-homes" },
+    typologies: [
+      { id: "a", name: "Casa 3 hab.", sqm: 145, bedrooms: 3, bathrooms: 2.5 },
+      { id: "b", name: "Casa 4 hab.", sqm: 180, bedrooms: 4, bathrooms: 3 },
+    ],
+  },
+  {
+    id: "terrenos-vista-verde",
+    name: "Terrenos Vista Verde",
+    zone: "Ciudad Colón, San José",
+    location: { lat: 9.9089, lng: -84.2394 },
+    priceFrom: 95000,
+    bedrooms: "Lote",
+    delivery: "2026",
+    propertyType: "lote",
+    amenities: ["Portón de acceso", "Electricidad disponible", "Agua potable", "Calles asfaltadas"],
+    developer: { name: "Desarrollos Vista Verde", slug: "desarrollos-vista-verde" },
+    typologies: [
+      { id: "a", name: "Lote 300 m²", sqm: 300, bedrooms: 0, bathrooms: 0 },
+      { id: "b", name: "Lote 450 m²", sqm: 450, bedrooms: 0, bathrooms: 0 },
     ],
   },
 ];
