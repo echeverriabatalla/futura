@@ -39,22 +39,36 @@
     <!-- ===================== RESUMEN ===================== -->
     <section class="results-hero">
       <div class="wrap">
-        <span class="eyebrow">Tu perfil de vida</span>
-        <h1>Los proyectos que encajan con tu familia</h1>
-        <p class="results-hero-lead">
-          Ubicamos tus zonas de trabajo, colegios y actividades, y calculamos qué tan bien encaja cada
-          proyecto según cuánto tarda tu familia en llegar a los lugares que ya forman parte de su rutina.
+        <span class="eyebrow" id="results-eyebrow">Proyectos</span>
+        <h1 id="results-title">Todos los proyectos activos</h1>
+        <p class="results-hero-lead" id="results-lead">
+          Explorá los proyectos en preventa del GAM y ajustá los filtros de ubicación, habitaciones y precio
+          según lo que buscás.
         </p>
 
         <div class="profile-summary" id="profile-summary"></div>
       </div>
     </section>
 
-    <!-- ===================== EMPTY STATE ===================== -->
-    <section class="results-empty" id="empty-state" hidden>
+    <!-- ===================== FILTROS ===================== -->
+    <section class="filters-section">
       <div class="wrap">
-        <p>Todavía no tenemos tu perfil de vida.</p>
-        <a href="index.html#inicio" class="btn btn-primary">Volver a completar el perfil</a>
+        <div class="filters-bar" id="filters-bar">
+          <div class="filter-field">
+            <label for="filter-zone">Ubicación</label>
+            <select id="filter-zone"></select>
+          </div>
+          <div class="filter-field">
+            <label for="filter-bedrooms">Habitaciones</label>
+            <select id="filter-bedrooms"></select>
+          </div>
+          <div class="filter-field">
+            <label for="filter-price">Precio</label>
+            <select id="filter-price"></select>
+          </div>
+          <button type="button" class="filters-reset" id="filters-reset">Restablecer</button>
+        </div>
+        <p class="filters-note" id="filters-note" hidden></p>
       </div>
     </section>
 
@@ -83,12 +97,17 @@
     <section class="results-list-section">
       <div class="wrap">
         <div class="section-head">
-          <span class="eyebrow">Proyectos afines</span>
-          <h2>Ordenados por compatibilidad con tu vida</h2>
+          <span class="eyebrow" id="list-eyebrow">Proyectos</span>
+          <h2 id="list-title">Todos los proyectos</h2>
           <p>Proyectos de muestra para esta versión preliminar de FUTURA — pronto vas a ver el catálogo real del GAM aquí.</p>
         </div>
 
         <div class="project-list" id="project-list"></div>
+
+        <div class="results-empty" id="no-matches-state" hidden>
+          <p>No encontramos proyectos con esos filtros.</p>
+          <button type="button" class="btn btn-primary" id="no-matches-reset">Restablecer filtros</button>
+        </div>
       </div>
     </section>
   </main>
