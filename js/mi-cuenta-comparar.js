@@ -2,7 +2,7 @@
   const PROJECTS = window.FUTURA_PROJECTS;
   const { floorPlanSVG } = window.FuturaTypologyVisuals;
   const MAX_COMPARE = 4;
-  const DEFAULT_HINT = "Marcá el check de hasta " + MAX_COMPARE + " para compararlas abajo.";
+  const DEFAULT_HINT = "Marcá hasta " + MAX_COMPARE + " tipologías para incluirlas en tu solicitud.";
 
   const emailEl = document.getElementById("account-email");
   const signinBtn = document.getElementById("account-signin-btn");
@@ -12,9 +12,8 @@
   const noSavedSection = document.getElementById("account-no-saved");
   const savedSection = document.getElementById("saved-section");
   const savedGrid = document.getElementById("saved-grid");
-  const compareSection = document.getElementById("compare-section");
-  const compareBody = document.getElementById("compare-inline-body");
   const selectHint = document.getElementById("saved-select-hint");
+  const leadRequestEl = document.getElementById("lead-request");
   const leadCopyEl = document.getElementById("lead-request-copy");
   const leadBtn = document.getElementById("lead-submit-btn");
   const LEAD_COPY_DEFAULT = leadCopyEl.textContent;
@@ -60,7 +59,6 @@
     signedOutSection.hidden = false;
     noSavedSection.hidden = true;
     savedSection.hidden = true;
-    compareSection.hidden = true;
   }
 
   function showSignedIn(session) {
@@ -86,7 +84,6 @@
     if (items.length === 0) {
       noSavedSection.hidden = false;
       savedSection.hidden = true;
-      compareSection.hidden = true;
       return;
     }
 
@@ -123,7 +120,7 @@
       savedGrid.appendChild(card);
     });
 
-    updateCompareView();
+    updateLeadRequest();
   }
 
   function removeItem(item) {
@@ -138,7 +135,7 @@
     if (checkbox.checked) {
       if (selected.size >= MAX_COMPARE) {
         checkbox.checked = false;
-        selectHint.textContent = "Ya elegiste el máximo de " + MAX_COMPARE + " para comparar. Desmarcá alguna primero.";
+        selectHint.textContent = "Ya elegiste el máximo de " + MAX_COMPARE + ". Desmarcá alguna primero.";
         return;
       }
       selected.set(item.rowId, item);
@@ -147,33 +144,12 @@
       selected.delete(item.rowId);
       selectHint.textContent = DEFAULT_HINT;
     }
-    updateCompareView();
+    updateLeadRequest();
   }
 
-  function updateCompareView() {
+  function updateLeadRequest() {
     resetLeadButton();
-
-    if (selected.size === 0) {
-      compareSection.hidden = true;
-      return;
-    }
-    compareSection.hidden = false;
-    compareBody.innerHTML = "";
-    selected.forEach((item) => {
-      const col = document.createElement("div");
-      col.className = "compare-col";
-      col.innerHTML =
-        '<div class="compare-col-image">' + floorPlanSVG(item.typology) + "</div>" +
-        "<h4>" + item.typology.name + "</h4>" +
-        '<p class="compare-col-project">' + item.project.name + "</p>" +
-        '<dl class="compare-specs">' +
-        "<dt>Área</dt><dd>" + item.typology.sqm + " m²</dd>" +
-        "<dt>Habitaciones</dt><dd>" + item.typology.bedrooms + "</dd>" +
-        "<dt>Baños</dt><dd>" + item.typology.bathrooms + "</dd>" +
-        "<dt>Precio desde</dt><dd>$" + item.project.priceFrom.toLocaleString("en-US") + "</dd>" +
-        "</dl>";
-      compareBody.appendChild(col);
-    });
+    leadRequestEl.hidden = selected.size === 0;
   }
 
   // ---------- Solicitar información (lead consolidado) ----------

@@ -1481,76 +1481,6 @@ section {
   font-size: 1.15rem;
 }
 
-.compare-modal-body {
-  flex: 1;
-  overflow: auto;
-  display: flex;
-  gap: 0;
-  padding: 22px;
-}
-
-.compare-col {
-  flex: 1;
-  min-width: 220px;
-  padding: 0 18px;
-  border-right: 1px solid var(--bg-light-alt);
-}
-
-.compare-col:last-child {
-  border-right: none;
-}
-
-.compare-col-image {
-  aspect-ratio: 320 / 210;
-  background: var(--bg-light-alt);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.compare-col-image svg {
-  width: 100%;
-  height: 100%;
-}
-
-.compare-col h4 {
-  margin-top: 14px;
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  color: var(--text-dark);
-}
-
-.compare-specs {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 6px 12px;
-}
-
-.compare-specs dt {
-  font-size: 0.78rem;
-  color: var(--text-onLight-soft);
-}
-
-.compare-specs dd {
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: var(--navy-900);
-  text-align: right;
-}
-
-@media (max-width: 640px) {
-  .compare-modal-body {
-    flex-direction: column;
-  }
-
-  .compare-col {
-    border-right: none;
-    border-bottom: 1px solid var(--bg-light-alt);
-    padding: 0 0 18px;
-    margin-bottom: 18px;
-  }
-}
-
 /* ---------- Modal de login / crear cuenta ---------- */
 
 .auth-modal {
@@ -1728,29 +1658,6 @@ section {
 
 .saved-card-remove:hover {
   text-decoration: underline;
-}
-
-.compare-inline {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-}
-
-.compare-inline .compare-col {
-  flex: 1;
-  min-width: 220px;
-  max-width: 280px;
-  border-right: none;
-  background: var(--white);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: 0 14px 34px -22px rgba(11, 18, 32, 0.35);
-}
-
-.compare-col-project {
-  font-size: 0.82rem;
-  color: var(--text-muted-onlight);
-  margin-top: 2px;
 }
 
 /* ---------- Página de desarrolladora ---------- */
