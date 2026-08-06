@@ -1974,3 +1974,40 @@ section {
     align-self: flex-start;
   }
 }
+
+/* ---------- Solicitar información (lead consolidado) ---------- */
+
+.lead-request {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: var(--navy-900);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+}
+
+.lead-request-info h3 {
+  font-family: var(--font-serif);
+  color: var(--white);
+  font-size: 1.2rem;
+}
+
+.lead-request-info p {
+  margin-top: 6px;
+  color: var(--text-muted-ondark);
+  font-size: 0.92rem;
+  max-width: 480px;
+}
+
+.lead-request .btn {
+  white-space: nowrap;
+}
+
+.lead-request .btn:disabled {
+  opacity: 0.75;
+  cursor: default;
+  transform: none;
+}

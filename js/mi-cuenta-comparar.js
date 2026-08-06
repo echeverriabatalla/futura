@@ -15,6 +15,9 @@
   const compareSection = document.getElementById("compare-section");
   const compareBody = document.getElementById("compare-inline-body");
   const selectHint = document.getElementById("saved-select-hint");
+  const leadCopyEl = document.getElementById("lead-request-copy");
+  const leadBtn = document.getElementById("lead-submit-btn");
+  const LEAD_COPY_DEFAULT = leadCopyEl.textContent;
 
   const selected = new Map();
 
@@ -24,6 +27,8 @@
     currentLabel: "Mis tipologías",
     fallback: { href: "../resultados.html", label: "Resultados" },
   });
+
+  leadBtn.addEventListener("click", submitLead);
 
   signinBtn.addEventListener("click", () => window.FuturaAuthModal.open(loadPage));
   signedOutBtn.addEventListener("click", () => window.FuturaAuthModal.open(loadPage));
@@ -146,6 +151,8 @@
   }
 
   function updateCompareView() {
+    resetLeadButton();
+
     if (selected.size === 0) {
       compareSection.hidden = true;
       return;
@@ -167,5 +174,50 @@
         "</dl>";
       compareBody.appendChild(col);
     });
+  }
+
+  // ---------- Solicitar información (lead consolidado) ----------
+  function loadAgentProfile() {
+    try {
+      const raw = localStorage.getItem("futuraUserProfile");
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function resetLeadButton() {
+    leadBtn.disabled = false;
+    leadBtn.textContent = "Solicitar información";
+    leadCopyEl.textContent = LEAD_COPY_DEFAULT;
+  }
+
+  function submitLead() {
+    const items = Array.from(selected.values()).map((item) => ({
+      project_id: item.project.id,
+      project_name: item.project.name,
+      developer_name: item.project.developer.name,
+      typology_id: item.typology.id,
+      typology_name: item.typology.name,
+      sqm: item.typology.sqm,
+      bedrooms: item.typology.bedrooms,
+      bathrooms: item.typology.bathrooms,
+      price_from: item.project.priceFrom,
+    }));
+
+    leadBtn.disabled = true;
+    leadBtn.textContent = "Enviando...";
+
+    window.FuturaLeads.submit({ profile: loadAgentProfile(), items })
+      .then(() => {
+        leadBtn.textContent = "✓ Solicitud enviada";
+        leadCopyEl.textContent =
+          "Listo — enviamos tu perfil y las " + items.length + " tipologías seleccionadas en una sola solicitud.";
+      })
+      .catch(() => {
+        leadBtn.disabled = false;
+        leadBtn.textContent = "Solicitar información";
+        leadCopyEl.textContent = "No se pudo enviar la solicitud. Intentá de nuevo.";
+      });
   }
 })();
